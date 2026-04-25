@@ -1,7 +1,22 @@
 from flask import Flask, render_template, request, redirect
+import json
+import os
 
 app = Flask(__name__)
-tasks = ['Купить хлеб', 'Сделать уроки', 'Позвонить другу']
+
+FILE_NAME = 'tasks.json'
+
+def load_tasks():
+    if os.path.exists(FILE_NAME):
+        with open(FILE_NAME, 'r', encoding='utf-8') as f:
+            return json.load(f)
+    return []
+
+def save_tasks(tasks):
+    with open(FILE_NAME, 'w', encoding='utf-8') as f:
+        json.dump(tasks, f, ensure_ascii=False, indent=2)
+
+tasks = load_tasks()
 
 @app.route('/')
 def index():
@@ -12,6 +27,7 @@ def add_task():
     new_task = request.form['task']
     if new_task:
         tasks.append(new_task)
+        save_tasks(tasks)
     return redirect('/')
 
 if __name__ == '__main__':
