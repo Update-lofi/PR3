@@ -30,5 +30,13 @@ def add_task():
         save_tasks(tasks)
     return redirect('/')
 
+@app.route('/delete/<int:task_id>')
+def delete_task(task_id):
+    if 0 <= task_id < len(tasks):
+        tasks.pop(task_id)
+        save_tasks(tasks)
+    return redirect('/')
+
+
 if __name__ == '__main__':
     app.run(debug=True)
