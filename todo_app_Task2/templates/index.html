@@ -12,12 +12,16 @@
 <body>
     <h1>Мои задачи</h1>
     
-    <ul>
-        {% for task in tasks %}
-            <li>{{ task }}</li>
-        {% endfor %}
-    </ul>
-    
+<ul>
+    {% for task in tasks %}
+        <li>
+            {{ task }}
+            <a href="/delete/{{ loop.index0 }}">Удалить</a>
+        </li>
+    {% endfor %}
+</ul>
+
+
     <h2>Добавить задачу</h2>
 <form method="POST" action="/add">
     <input type="text" name="task" placeholder="Новая задача" required>
