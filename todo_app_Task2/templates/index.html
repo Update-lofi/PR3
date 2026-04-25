@@ -17,5 +17,12 @@
             <li>{{ task }}</li>
         {% endfor %}
     </ul>
+    
+    <h2>Добавить задачу</h2>
+<form method="POST" action="/add">
+    <input type="text" name="task" placeholder="Новая задача" required>
+    <button type="submit">Добавить</button>
+</form>
+
 </body>
 </html>
