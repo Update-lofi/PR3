@@ -1,9 +1,9 @@
 from flask import Flask, render_template, request, redirect
 import json
 import os
+from datetime import datetime
 
 app = Flask(__name__)
-
 FILE_NAME = 'tasks.json'
 
 def load_tasks():
@@ -24,8 +24,12 @@ def index():
 
 @app.route('/add', methods=['POST'])
 def add_task():
-    new_task = request.form['task']
-    if new_task:
+    new_task_text = request.form.get('task', '').strip()
+    if new_task_text:
+        new_task = {
+            "text": new_task_text,
+            "date": datetime.now().strftime("%d.%m.%Y %H:%M")
+        }
         tasks.append(new_task)
         save_tasks(tasks)
     return redirect('/')
@@ -37,8 +41,8 @@ def delete_task(task_id):
         save_tasks(tasks)
     return redirect('/')
 
-@app.route('/clear')
-def clear_tasks():
+@app.route('/clear_all')
+def clear_all_tasks():
     tasks.clear()
     save_tasks(tasks)
     return redirect('/')
