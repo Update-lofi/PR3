@@ -37,6 +37,11 @@ def delete_task(task_id):
         save_tasks(tasks)
     return redirect('/')
 
+@app.route('/clear')
+def clear_tasks():
+    tasks.clear()
+    save_tasks(tasks)
+    return redirect('/')
 
 if __name__ == '__main__':
     app.run(debug=True)
